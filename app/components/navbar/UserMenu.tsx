@@ -8,10 +8,17 @@ import MenuItem from "./MenuItem";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signOut } from "next-auth/react";
+import { SafeUser } from "@/app/types";
+
+// props
+interface UserMenuProps {
+	currentUser?: SafeUser | null;
+}
 
 // user menu component
 // dropmenu for navbar
-const UserMenu = () => {
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	// register and login modals view state
 	const registerModal = useRegisterModal();
 	const loginModal = useLoginModal();
@@ -54,13 +61,37 @@ const UserMenu = () => {
 			{isOpen && (
 				<div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
 					<div className="flex flex-col cursor-pointer">
-						
-						{/* login */}
-						<MenuItem onClick={loginModal.onOpen} label="Login" />
+						{currentUser ? (
+							<>
+								{/* trips */}
+								<MenuItem onClick={() => {}} label="My trips" />
 
-						{/* sign up */}
-						<MenuItem onClick={registerModal.onOpen} label="Sign up" />
+								{/* favorites */}
+								<MenuItem onClick={() => {}} label="My favorites" />
 
+								{/* reservations */}
+								<MenuItem onClick={() => {}} label="My reservations" />
+
+								{/* properties */}
+								<MenuItem onClick={() => {}} label="My properties" />
+
+								{/* my home */}
+								<MenuItem onClick={() => {}} label="Airbnb my home" />
+
+								<hr />
+
+								{/* logout */}
+								<MenuItem onClick={() => signOut()} label="Logout" />
+							</>
+						) : (
+							<>
+								{/* login */}
+								<MenuItem onClick={loginModal.onOpen} label="Login" />
+
+								{/* sign up */}
+								<MenuItem onClick={registerModal.onOpen} label="Sign up" />
+							</>
+						)}
 					</div>
 				</div>
 			)}
