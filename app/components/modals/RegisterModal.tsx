@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import axios from 'axios'; // for api requests
 import { AiFillGithub } from 'react-icons/ai'; // for github icon
 import { FcGoogle } from 'react-icons/fc'; // for google icon
@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast'; // for toast notifications
 import { signIn } from 'next-auth/react'; // for google and github sign in
 
 import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
 import Modal from '@/app/components/modals/Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
@@ -19,6 +20,7 @@ import Button from '../Button';
 const RegisterModal = () => {
   // modal view state, (methods: isOpen, onClose, onOpen)
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
   // loading state, for disabling inputs during api requests
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +59,12 @@ const RegisterModal = () => {
       });
   };
 
+  // close register modal and open login modal
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
+
   // form inputs, email, name and password
   // passed to modal body prop
   const bodyContent = (
@@ -94,7 +102,7 @@ const RegisterModal = () => {
       <div className='mt-4 font-light text-center text-neutral-500'>
         <div className='flex flex-row items-center justify-center gap-2'>
           <div>Already have an account?</div>
-          <div onClick={registerModal.onClose} className='cursor-pointer text-neutral-800 hover:underline'>Log in</div>
+          <div onClick={toggle} className='cursor-pointer text-neutral-800 hover:underline'>Log in</div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AiFillGithub } from 'react-icons/ai'; // for github icon
 import { FcGoogle } from 'react-icons/fc'; // for google icon
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form'; // for form validation
@@ -9,6 +9,7 @@ import { signIn } from 'next-auth/react'; // for next auth sign in
 import { useRouter } from 'next/navigation'; // for page routing
 
 import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Modal from '@/app/components/modals/Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
@@ -19,6 +20,7 @@ import Button from '../Button';
 const LoginModal = () => {
   // modal view state, (methods: isOpen, onClose, onOpen)
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
 
   // loading state, for disabling inputs during api requests
   const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +71,12 @@ const LoginModal = () => {
     })
   };
 
+  // close login modal and open register modal
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
+  
   // form inputs, email and password
   // passed to modal body prop
   const bodyContent = (
@@ -101,12 +109,12 @@ const LoginModal = () => {
         onClick={() => signIn('github')}
       />
 
-      {/* already have an account */}
+      {/* don't have an account */}
       <div className='mt-4 font-light text-center text-neutral-500'>
         <div className='flex flex-row items-center justify-center gap-2'>
-          <div>Already have an account?</div>
+          <div>Don&#39;t have an account?</div>
           {/* close modal */}
-          <div onClick={loginModal.onClose} className='cursor-pointer text-neutral-800 hover:underline'>Log in</div>
+          <div onClick={toggle} className='cursor-pointer text-neutral-800 hover:underline'>Sign up</div>
         </div>
       </div>
     </div>

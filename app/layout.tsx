@@ -1,10 +1,11 @@
 import './globals.css'
 import { Nunito } from 'next/font/google' // import font from google fonts
 
+import ToasterProvider from './components/providers/ToasterProvider'
 import Navbar from './components/navbar/Navbar'
 import RegisterModal from './components/modals/RegisterModal'
-import ToasterProvider from './components/providers/ToasterProvider'
 import LoginModal from './components/modals/LoginModal'
+import RentModal from './components/modals/RentModal'
 import getCurrentUser from './actions/getCurrentUser'
 
 // create font
@@ -38,6 +39,7 @@ export default async function RootLayout({
         {/* modals */}
         <LoginModal />
         <RegisterModal />
+        <RentModal />
 
         {children}
       </body>

@@ -8,3 +8,6 @@
 - Configure authentication with NextAuth.js
 - Configure OAuth with Google and GitHub
 - API Routing with Next.js
+- Creating search params using query strings
+- Set up leaflet map
+- Set up Cloudinary for image hosting
