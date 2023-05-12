@@ -2,16 +2,20 @@
 
 import Image from "next/image";
 
+interface AvatarProps {
+  src: string | null | undefined;
+}
+
 // profile picture component
 // profile picture for user menu
-const Avatar = () => {
+const Avatar: React.FC<AvatarProps> = ({ src }) => {
   return (
     <Image 
       alt="Avatar"
       className="rounded-full"
       height={30}
       width={30}
-      src={"/images/placeholder.jpg"}
+      src={src || "/images/placeholder.jpg"}
     />
   )
 };

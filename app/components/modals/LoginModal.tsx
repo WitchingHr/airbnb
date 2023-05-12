@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios'; // for api requests
 import { AiFillGithub } from 'react-icons/ai'; // for github icon
 import { FcGoogle } from 'react-icons/fc'; // for google icon
-import { useForm, FieldValues, SubmitHandler, set } from 'react-hook-form'; // for form validation
+import { useForm, FieldValues, SubmitHandler } from 'react-hook-form'; // for form validation
 import { toast } from 'react-hot-toast'; // for toast notifications
 import { signIn } from 'next-auth/react'; // for next auth sign in
 import { useRouter } from 'next/navigation'; // for page routing
@@ -91,7 +90,7 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       />
 
       {/* github */}
@@ -99,7 +98,7 @@ const LoginModal = () => {
         outline
         label="Continue with GitHub"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn('github')}
       />
 
       {/* already have an account */}

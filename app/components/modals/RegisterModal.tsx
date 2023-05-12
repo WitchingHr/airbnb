@@ -6,6 +6,7 @@ import { AiFillGithub } from 'react-icons/ai'; // for github icon
 import { FcGoogle } from 'react-icons/fc'; // for google icon
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form'; // for form validation
 import { toast } from 'react-hot-toast'; // for toast notifications
+import { signIn } from 'next-auth/react'; // for google and github sign in
 
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Modal from '@/app/components/modals/Modal';
@@ -78,7 +79,7 @@ const RegisterModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       />
 
       {/* github */}
@@ -86,7 +87,7 @@ const RegisterModal = () => {
         outline
         label="Continue with GitHub"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn('github')}
       />
 
       {/* already have an account */}
