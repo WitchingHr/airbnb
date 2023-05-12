@@ -1,7 +1,8 @@
 'use client';
 
-import { IconType } from "react-icons";
+import { IconType } from "react-icons"; // for icon types
 
+// props
 interface ButtonProps {
 	label: string;
 	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -11,13 +12,15 @@ interface ButtonProps {
 	icon?: IconType;
 }
 
+// button component
+// reusable button component
 const Button: React.FC<ButtonProps> = ({
 	label,
 	onClick,
 	disabled,
 	outline,
 	small,
-	icon: Icon,
+	icon: Icon, // destructured and renamed to Icon for readability
 }) => {
 	return (
 		<button
@@ -29,10 +32,14 @@ const Button: React.FC<ButtonProps> = ({
 					: "bg-rose-500 border-rose-500 text-white"
 			} ${small ? "py-1 text-sm font-light border-[1px]" : "py-3 text-md font-semibold border-2"}`}
 		>
+
+			{/* render icon if it exists */}
       {Icon && (
         <Icon className="absolute left-4 top-3" size={24} />
       )}
+
 			{label}
+
 		</button>
 	);
 };

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 
-// profile picture
+// profile picture component
+// profile picture for user menu
 const Avatar = () => {
   return (
     <Image 

@@ -1,8 +1,9 @@
 "use client";
 
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { BiDollar } from "react-icons/bi";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"; // for form validation
+import { BiDollar } from "react-icons/bi"; // for price icon
 
+// props
 interface InputProps {
 	id: string;
 	label: string;
@@ -10,10 +11,12 @@ interface InputProps {
 	disabled?: boolean;
 	formatPrice?: boolean;
 	required?: boolean;
-	register: UseFormRegister<FieldValues>;
-	errors: FieldErrors;
+	register: UseFormRegister<FieldValues>; // register function from useForm
+	errors: FieldErrors; // errors object from useForm
 }
 
+// input component
+// used for all inputs in the app
 const Input: React.FC<InputProps> = ({
 	id,
 	label,
@@ -26,6 +29,8 @@ const Input: React.FC<InputProps> = ({
 }) => {
 	return (
 		<div className="relative w-full">
+
+			{/* if input for price, render dollar icon */}
 			{formatPrice && (
 				<BiDollar
 					size={24}
@@ -36,7 +41,7 @@ const Input: React.FC<InputProps> = ({
 				id={id}
 				disabled={disabled}
 				{...register(id, { required })}
-				placeholder=" "
+				placeholder=" " // placeholder for label animation
 				type={type}
 				className={`
           peer
@@ -70,11 +75,12 @@ const Input: React.FC<InputProps> = ({
           z-10
           origin-[0]
           ${formatPrice ? "left-9" : "left-4"}
+          ${errors[id] ? "text-rose-500" : "text-zinc-400"}
           peer-placeholder-shown:scale-100
           peer-placeholder-shown:translate-y-0
           peer-focus:scale-75
-          peer-focus:-translate-y-4
-          ${errors[id] ? "text-rose-500" : "text-zinc-400"}`}
+          peer-focus:-translate-y-4`}
+					// peer ulility classes are used to animate the label
 			>
 				{label}
 			</label>

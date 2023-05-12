@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+// logo component
+// logo for the navbar
 const Logo = () => {
   const router = useRouter();
 

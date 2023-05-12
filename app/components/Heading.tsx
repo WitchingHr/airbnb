@@ -1,11 +1,14 @@
 'use client';
 
+// props
 interface HeadingProps {
   title: string;
   subtitle?: string;
   center?: boolean;
 }
 
+// heading component
+// headings for modals
 const Heading: React.FC<HeadingProps> = ({
   title,
   subtitle,

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+// store type for the register modal view state
 interface RegisterModalStore {
   isOpen: boolean;
   onOpen: () => void;

@@ -5,6 +5,8 @@ import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
+// navbar component
+// navbar, contains logo, search, and user menu
 const Navbar = () => {
   return (
     <div className="fixed z-10 w-full bg-white shadow-sm">

@@ -4,23 +4,28 @@ import { useState } from 'react';
 import axios from 'axios'; // for api requests
 import { AiFillGithub } from 'react-icons/ai'; // for github icon
 import { FcGoogle } from 'react-icons/fc'; // for google icon
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form'; // for form validation
+import { useForm, FieldValues, SubmitHandler, set } from 'react-hook-form'; // for form validation
 import { toast } from 'react-hot-toast'; // for toast notifications
+import { signIn } from 'next-auth/react'; // for next auth sign in
+import { useRouter } from 'next/navigation'; // for page routing
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
 import Modal from '@/app/components/modals/Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
 import Button from '../Button';
 
-// register modal component
-// modal for registering new user
-const RegisterModal = () => {
+// login modal component
+// modal for logging user in
+const LoginModal = () => {
   // modal view state, (methods: isOpen, onClose, onOpen)
-  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
   // loading state, for disabling inputs during api requests
   const [isLoading, setIsLoading] = useState(false);
+
+  // router for page refresh after login
+  const router = useRouter();
 
   // form logic
   const {
@@ -29,7 +34,6 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
@@ -40,29 +44,38 @@ const RegisterModal = () => {
     // set loading true, disable inputs
     setIsLoading(true);
 
-    // send request with data
-    axios.post('/api/register', data)
-      .then((res) => {
-        // if succes, close modal
-        registerModal.onClose();
-      })
-      .catch((err) => {
-        // toast error
-        toast.error('Something went wrong!');
-      })
-      .finally(() => {
-        // set loading false, enable inputs
-        setIsLoading(false);
-      });
+    // validate credentials with NextAuth
+    signIn('credentials', {
+      // pass email and password
+      ...data,
+
+      // don't redirect page
+      redirect: false,
+
+    }).then((callback) => {
+      // set loading false, enable inputs
+      setIsLoading(false);
+
+      // if success, toast success, refresh page and close modal
+      if (callback?.ok) {
+        toast.success('Logged in successfully!');
+        router.refresh();
+        loginModal.onClose();
+      }
+      
+      // if error, toast error
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    })
   };
 
-  // form inputs, email, name and password
+  // form inputs, email and password
   // passed to modal body prop
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title='Welcome to Airbnb' subtitle='Create an account!' />
+      <Heading title='Welcome back' subtitle='Login to your account!' />
       <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />
-      <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" label="Password" type='password' disabled={isLoading} register={register} errors={errors} required />
     </div>
   );
@@ -72,7 +85,7 @@ const RegisterModal = () => {
   const footerContent = (
     <div className='flex flex-col gap-4 mt-3'>
       <hr />
-
+      
       {/* google */}
       <Button
         outline
@@ -93,7 +106,8 @@ const RegisterModal = () => {
       <div className='mt-4 font-light text-center text-neutral-500'>
         <div className='flex flex-row items-center justify-center gap-2'>
           <div>Already have an account?</div>
-          <div onClick={registerModal.onClose} className='cursor-pointer text-neutral-800 hover:underline'>Log in</div>
+          {/* close modal */}
+          <div onClick={loginModal.onClose} className='cursor-pointer text-neutral-800 hover:underline'>Log in</div>
         </div>
       </div>
     </div>
@@ -103,15 +117,15 @@ const RegisterModal = () => {
   return (
     <Modal 
       disabled={isLoading} // disable inputs during api request
-      isOpen={registerModal.isOpen} // modal view state
-      title="Register"
+      isOpen={loginModal.isOpen} // modal view state
+      title="Login"
       actionLabel='Continue'
-      onClose={registerModal.onClose} // close modal
+      onClose={loginModal.onClose} // close modal
       onSubmit={handleSubmit(onSubmit)} // submit form
-      body={bodyContent} // inputs
-      footer={footerContent} // google and github buttons
+      body={bodyContent} // form inputs
+      footer={footerContent} // google and github sign in buttons
     />
   )
 };
 
-export default RegisterModal;
+export default LoginModal;

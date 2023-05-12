@@ -1,13 +1,13 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { AuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"; // prisma adapter for next-auth
+import NextAuth, { AuthOptions } from "next-auth"; // next-auth and auth options config
+import GithubProvider from "next-auth/providers/github"; // github provider for next-auth
+import GoogleProvider from "next-auth/providers/google"; // google provider for next-auth
+import CredentialsProvider from "next-auth/providers/credentials"; // credentials provider for next-auth
+import bcrypt from "bcrypt"; // for password hashing
 
 import prisma from "@/app/lib/prismadb";
 
-// configure next-auth
+// configure auth options and export
 export const authOptions: AuthOptions = {
   // use prisma
   adapter: PrismaAdapter(prisma),
@@ -28,9 +28,9 @@ export const authOptions: AuthOptions = {
         email: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
-      // validate credentials
+      // function for validating credentials
       async authorize(credentials) {
-        // empty input
+        // if missing credentials
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Missing credentials");
         }
@@ -40,20 +40,20 @@ export const authOptions: AuthOptions = {
           where: { email: credentials.email },
         });
 
-        // user not found
+        // if user not found
         if (!user || !user?.hashedPassword) {
           throw new Error("User not found");
         }
 
         // compare passwords
         const isCorrectPassword = await bcrypt.compare(
-          // input password
+          // password from credentials
           credentials.password,
-          // hashed db password
+          // hashed password from db
           user.hashedPassword
         );
 
-        // incorrect password
+        // if incorrect password
         if (!isCorrectPassword) {
           throw new Error("Incorrect password");
         }
