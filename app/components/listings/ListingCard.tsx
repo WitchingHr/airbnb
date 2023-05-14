@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns"; // for formatting dates
 
 // types
-import { SafeUser } from "@/app/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeListing, SafeUser } from "@/app/types";
+import { Reservation } from "@prisma/client";
 import useCountries from "@/app/hooks/useCountries";
 import { useCallback, useMemo } from "react";
 import Image from "next/image";
@@ -14,7 +14,7 @@ import Button from "../Button";
 
 // props
 interface ListingCardProps {
-  data: Listing;
+  data: SafeListing;
   reservation?: Reservation;
   onAction?: (id: string) => void;
   disabled?: boolean;
@@ -76,7 +76,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <div
-      onClick={() => router.push(`/listings/${data.id}`)}
+      onClick={() => router.push(`/listings/${data.id}`)} // go to listing page
       className="col-span-1 cursor-pointer group" // group for hover effect
     >
       <div className="flex flex-col gap-2 w-full">

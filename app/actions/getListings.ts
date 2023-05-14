@@ -10,8 +10,14 @@ export default async function getListings() {
       }
     });
 
+    // sanitize listing data for client
+    const safeListings = listings.map((listing) => ({
+      ...listing,
+      createdAt: listing.createdAt.toISOString(),
+    }));
+
     // return listings
-    return listings;
+    return safeListings;
 
   } catch (err: any) {
     // if error, throw error
