@@ -95,7 +95,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
       // reset date range
       setDateRange(initialDateRange);
       // refresh router
-      router.refresh();
+      router.push('/trips');
 
     }).catch(() => {
       // toast error

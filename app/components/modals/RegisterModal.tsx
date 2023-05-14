@@ -14,6 +14,7 @@ import Modal from '@/app/components/modals/Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
 import Button from '../Button';
+import { log } from 'console';
 
 // register modal component
 // modal for registering new user
@@ -46,8 +47,12 @@ const RegisterModal = () => {
     // send request with data
     axios.post('/api/register', data)
       .then((res) => {
-        // if succes, close modal
+        // toast success
+        toast.success('Account created! Please log in.');
+
+        // close register modal and open login modal
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((err) => {
         // toast error

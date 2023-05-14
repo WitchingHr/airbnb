@@ -29,7 +29,7 @@ export default async function getReservations(params: IParams) {
 
     // if authorId, add to query
     if (authorId) {
-      query.authorId = authorId;
+      query.listing = { userId: authorId };
     }
 
     // get reservations from db, include listing

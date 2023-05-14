@@ -11,6 +11,7 @@ interface IParams {
 }
 
 // listing page for individual listing
+// fetches listing by id and displays listing client
 const ListingPage = async ({ params }: { params: IParams }) => {
   // get listing by id using params
   const listing = await getListingById(params);
@@ -26,6 +27,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
     return <EmptyState />;
   }
 
+  // otherwise, show listing client
   return (
     <div>
       <ListingClient

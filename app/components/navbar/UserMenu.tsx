@@ -11,6 +11,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRentModal from "@/app/hooks/useRentModal";
 import { SafeUser } from "@/app/types";
+import { useRouter } from "next/navigation";
 
 // props
 interface UserMenuProps {
@@ -20,6 +21,9 @@ interface UserMenuProps {
 // user menu component
 // dropmenu for navbar
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+	// router
+	const router = useRouter();
+
 	// register and login modals view state
 	const registerModal = useRegisterModal();
 	const loginModal = useLoginModal();
@@ -78,16 +82,16 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 						{currentUser ? (
 							<>
 								{/* trips */}
-								<MenuItem onClick={() => {}} label="My trips" />
+								<MenuItem onClick={() => router.push('/trips')} label="My trips" />
 
 								{/* favorites */}
-								<MenuItem onClick={() => {}} label="My favorites" />
+								<MenuItem onClick={() => router.push('/favorites')} label="My favorites" />
 
 								{/* reservations */}
-								<MenuItem onClick={() => {}} label="My reservations" />
+								<MenuItem onClick={() => router.push('/reservations')} label="My reservations" />
 
 								{/* properties */}
-								<MenuItem onClick={() => {}} label="My properties" />
+								<MenuItem onClick={() => router.push('/properties')} label="My properties" />
 
 								{/* my home */}
 								<MenuItem onClick={onRent} label="Airbnb my home" />
