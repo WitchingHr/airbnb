@@ -14,3 +14,7 @@
 - Creating dynamic routes with Next.js
 - Sanitizing data for client
 - Creating server actions with Next.js
+- Using search params to filter database data
+- Creating loading page with Next.js 13
+- Creating error page with Next.js 13
+- Creating protected routes with NextAuth configuration
