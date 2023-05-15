@@ -5,6 +5,8 @@ import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import PropertiesClient from "./PropertiesClient";
 
+export const dynamic = 'force-dynamic'
+
 // properties page
 // fetches properties for current user and displays properties client
 const PropertiesPage = async () => {

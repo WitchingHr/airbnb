@@ -4,11 +4,14 @@ import getReservations from "@/app/actions/getReservations";
 
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "./ListingClient";
+import ClientOnly from "@/app/components/ClientOnly";
 
 // params interface
 interface IParams {
   listingId?: string;
 }
+
+export const dynamic = 'force-dynamic'
 
 // listing page for individual listing
 // fetches listing by id and displays listing client
@@ -30,11 +33,13 @@ const ListingPage = async ({ params }: { params: IParams }) => {
   // otherwise, show listing client
   return (
     <div>
-      <ListingClient
-        listing={listing}
-        currentUser={currentUser}
-        reservations={reservations}
-      />
+      <ClientOnly>
+        <ListingClient
+          listing={listing}
+          currentUser={currentUser}
+          reservations={reservations}
+        />
+      </ClientOnly>
     </div>
   )
 };

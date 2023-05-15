@@ -5,6 +5,8 @@ import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import TripsClient from "./TripsClient";
 
+export const dynamic = 'force-dynamic'
+
 // trips page
 // fetches trips for current user and displays trips client
 const TripsPage = async () => {

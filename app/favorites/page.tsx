@@ -5,6 +5,8 @@ import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import FavoritesClient from "./FavoritesClient";
 
+export const dynamic = 'force-dynamic'
+
 // favorites page
 // fetches favorite listings for current user and displays favorites client
 const FavoritesPage = async () => {

@@ -5,6 +5,8 @@ import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import ReservationsClient from "./ReservationsClient";
 
+export const dynamic = 'force-dynamic'
+
 // reservations page
 // fetches reservations for current user and displays reservations client
 const ReservationsPage = async () => {
