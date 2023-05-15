@@ -1,5 +1,6 @@
 import getCurrentUser from "../actions/getCurrentUser";
 import getListings from "../actions/getListings";
+import ClientOnly from "../components/ClientOnly";
 
 import EmptyState from "../components/EmptyState";
 import PropertiesClient from "./PropertiesClient";
@@ -33,10 +34,12 @@ const PropertiesPage = async () => {
 
   // otherwise, show trips client
   return (
-    <PropertiesClient
-      listings={listings}
-      currentUser={currentUser}
-    />
+    <ClientOnly>
+      <PropertiesClient
+        listings={listings}
+        currentUser={currentUser}
+      />
+    </ClientOnly>
   );
 };
 

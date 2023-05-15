@@ -1,5 +1,6 @@
 import getCurrentUser from "../actions/getCurrentUser";
 import getFavoriteListings from "../actions/getFavoriteListings";
+import ClientOnly from "../components/ClientOnly";
 
 import EmptyState from "../components/EmptyState";
 import FavoritesClient from "./FavoritesClient";
@@ -35,10 +36,12 @@ const FavoritesPage = async () => {
 
   // otherwise, show favorites client
   return (
-    <FavoritesClient
-      listings={listings}
-      currentUser={currentUser}
-    />
+    <ClientOnly>
+      <FavoritesClient
+        listings={listings}
+        currentUser={currentUser}
+      />
+    </ClientOnly>
   );
 };
 
