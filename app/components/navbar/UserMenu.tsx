@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai"; // for menu icon
 import { signOut } from "next-auth/react";
 
@@ -49,8 +49,23 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 
 	}, [currentUser, loginModal, rentModal]);
 
+	const menuRef = useRef<HTMLDivElement>(null);
+
+	const handleClickOutside = useCallback((event: MouseEvent) => {
+		if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+			setIsOpen(false);
+		}
+	}, [menuRef]);
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [handleClickOutside]);
+
 	return (
-		<div className="relative">
+		<div ref={menuRef} className="relative">
 			<div className="flex flex-row items-center gap-3">
 				<div
 					onClick={onRent}
