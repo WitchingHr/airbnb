@@ -45,6 +45,8 @@ Users can create an account, list their home for rent, browse other listings and
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Images:
+![abb1](https://github.com/WitchingHr/airbnb/assets/41353202/7e10b350-5eb7-4d9a-bc58-b2d70e574113)
+![abb2](https://github.com/WitchingHr/airbnb/assets/41353202/b3516560-e607-4a4a-a257-8a17c585f10f)
 
 ## Lessons Learned:
 
